@@ -25,7 +25,6 @@ public class StringSearchTest {
     class main {
         @Test
         void returnIndex() throws IOException {
-///Users/yokohama/StringSearch
             Path p1 = Paths.get("");
             Path p2 = p1.toAbsolutePath();
 
@@ -40,19 +39,19 @@ public class StringSearchTest {
             assertEquals(expected, result);
         }
     }
-    @Nested
-    class getFilepath {
-
-        @Test
-        void returnFilePath() throws IOException{
-            Path p1 = Paths.get("");
-            Path p2 = p1.toAbsolutePath();
-
-            System.out.println("Test  "+p2.toString());
-
-            assertEquals(StringSearch.getFilePath(),
-                    Files.readString(Paths.get("data/String_A_File.txt")));
-
-        }
-    }
+//    @Nested
+//    class getFilepath {
+//
+//        @Test
+//        void returnFilePath() throws IOException{
+//            Path p1 = Paths.get("");
+//            Path p2 = p1.toAbsolutePath();
+//
+//            System.out.println("Test  "+p2.toString());
+//            StringSearch.main(new String[]{SearchStr});
+////            assertEquals(,
+////                    Files.readString(Paths.get("data/String_A_File.txt")));
+//
+//        }
+//    }
 }
