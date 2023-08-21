@@ -31,5 +31,5 @@ tasks.named('test') {
 }
 
 application {
-	mainClass.set('com.example.demo.DemoApplication')
+	mainClass.set('com.example.demo.StringSearch')
 }

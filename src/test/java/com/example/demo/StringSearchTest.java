@@ -51,7 +51,7 @@ public class StringSearchTest {
             System.out.println("Test  "+p2.toString());
 
             assertEquals(StringSearch.getFilePath(),
-                    Files.readString(Paths.get("../resources/String_A_File.txt")));
+                    Files.readString(Paths.get("data/String_A_File.txt")));
 
         }
     }

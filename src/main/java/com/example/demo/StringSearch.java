@@ -12,7 +12,7 @@ public class StringSearch {
         Path p1 = Paths.get("");
         Path p2 = p1.toAbsolutePath();
 
-        System.out.println("ddd"+p2.toString());
+        System.out.println("実装側　"+p2.toString());
 
         String str = args[0];
 
@@ -26,7 +26,7 @@ public class StringSearch {
     }
 
     public static String getFilePath() throws IOException {
-        Path path = Paths.get("../resources/String_A_File.txt");
+        Path path = Paths.get("data/String_A_File.txt");
         return Files.readString(path);
     }
 }
