@@ -3,10 +3,12 @@ package com.example.demo;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class SearchIndexTest {
+public class SearchIndexImplTest {
     private final SearchIndex target =
             new SearchIndexImpl();
     @SuppressWarnings("FieldCanBeLocal")
@@ -17,10 +19,9 @@ public class SearchIndexTest {
     @Nested
     class search {
         @Test
-        void returnSearchResult() {
+        void returnSearchResults() {
             var result = target.search(str, stringA);
-            var expected = "4文字目\n29文字目\n";
-
+            var expected = Arrays.asList(4,29);
             assertEquals(expected, result);
         }
     }

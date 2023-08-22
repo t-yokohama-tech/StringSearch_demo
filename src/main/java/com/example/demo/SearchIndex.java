@@ -1,6 +1,8 @@
 package com.example.demo;
 
+import java.util.List;
+
 public interface SearchIndex {
 
-    String search(String str,String stringA);
+    List<Integer> search(String str, String stringA);
 }

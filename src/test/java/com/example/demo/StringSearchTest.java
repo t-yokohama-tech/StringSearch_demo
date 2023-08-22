@@ -3,6 +3,8 @@ package com.example.demo;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,7 +15,7 @@ public class StringSearchTest {
 
     @SuppressWarnings("FieldCanBeLocal")
     private final String SearchStr = "紳士";
-    private final String searchResult = "4文字目\n29文字目";
+    private final List<Integer> searchResult = Arrays.asList(4,29);
     private final SearchIndex searchIndex = mock(SearchIndex.class);
     {
         doReturn(searchResult).when(searchIndex).search(any(),any());
@@ -32,7 +34,7 @@ public class StringSearchTest {
     private final IndexOutput indexOutput = mock(IndexOutput.class);
     {
         doAnswer((i) -> {
-            System.out.println(searchResult);
+            System.out.print("4文字目\n29文字目\n");
             return null;
         }).when(indexOutput).output(any());
     }
@@ -49,7 +51,7 @@ public class StringSearchTest {
     }
 
     @Test
-    void returnIndex_useAssert() throws Exception {
+    void returnIndex() throws Exception {
         setUpStreams();
         target.run(SearchStr);
         System.out.flush();

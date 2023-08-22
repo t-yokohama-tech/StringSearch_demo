@@ -6,14 +6,16 @@ import org.junit.jupiter.api.Test;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class IndexOutputTest {
+public class IndexOutputImplTest {
 
     @SuppressWarnings("FieldCanBeLocal")
-    private final String searchResult = "4文字目\n29文字目\n";
+    private final List<Integer> searchResults = Arrays.asList(4,29);
     private PrintStream defaultPrintStream;
     private ByteArrayOutputStream byteArrayOutputStream;
 
@@ -30,7 +32,7 @@ public class IndexOutputTest {
         @Test
         void returnOutputResult() {
             setUpStreams();
-            target.output(searchResult);
+            target.output(searchResults);
             System.out.flush();
             var actual = byteArrayOutputStream.toString();
             var expected = "4文字目\n29文字目\n";

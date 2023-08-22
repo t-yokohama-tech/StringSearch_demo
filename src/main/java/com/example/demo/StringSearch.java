@@ -3,13 +3,13 @@ package com.example.demo;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Component
+@SpringBootApplication
 @AllArgsConstructor
 public class StringSearch implements CommandLineRunner {
     public static void main(String[] args) {
