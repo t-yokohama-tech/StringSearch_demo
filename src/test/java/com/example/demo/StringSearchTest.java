@@ -1,57 +1,35 @@
 package com.example.demo;
 
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StringSearchTest {
 
 
     private final StringSearch target = new StringSearch();
+    @SuppressWarnings("FieldCanBeLocal")
     private final String SearchStr = "紳士";
-    private final PrintStream defaultPrintStream = System.out;
-    private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    private PrintStream defaultPrintStream;
+    private ByteArrayOutputStream byteArrayOutputStream;
 
-    @Nested
-    class main {
-        @Test
-        void returnIndex() throws IOException {
-            Path p1 = Paths.get("");
-            Path p2 = p1.toAbsolutePath();
-
-            System.out.println(p2.toString());
-
-            StringSearch.main(new String[]{SearchStr});
-
-            System.out.flush();
-            String result = byteArrayOutputStream.toString();
-
-            String expected = "4文字目　29文字目";
-            assertEquals(expected, result);
-        }
+    public void setUpStreams() {
+        defaultPrintStream = System.out;
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(new BufferedOutputStream(byteArrayOutputStream)));
     }
-//    @Nested
-//    class getFilepath {
-//
-//        @Test
-//        void returnFilePath() throws IOException{
-//            Path p1 = Paths.get("");
-//            Path p2 = p1.toAbsolutePath();
-//
-//            System.out.println("Test  "+p2.toString());
-//            StringSearch.main(new String[]{SearchStr});
-////            assertEquals(,
-////                    Files.readString(Paths.get("data/String_A_File.txt")));
-//
-//        }
-//    }
+
+    @Test
+    void returnIndex_useAssert() throws Exception {
+        setUpStreams();
+        target.run(SearchStr);
+        System.out.flush();
+        var actual = byteArrayOutputStream.toString();
+        var expected = "4文字目\n29文字目\n";
+        assertThat(actual, is(expected));
+        System.setOut(defaultPrintStream);
+    }
 }

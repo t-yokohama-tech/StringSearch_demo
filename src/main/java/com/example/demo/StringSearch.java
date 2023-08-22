@@ -16,11 +16,6 @@ public class StringSearch implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws IOException {
-        Path p1 = Paths.get("");
-        Path p2 = p1.toAbsolutePath();
-
-        System.out.println("実装側　" + p2.toString());
-
         String str = args[0];
         Path path = Paths.get("data/String_A_File.txt");
         String stringA = Files.readString(path);
