@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class IndexOutputImplTest {
 
     @SuppressWarnings("FieldCanBeLocal")
-    private final List<Integer> searchResults = Arrays.asList(4,29);
+    private final List<Integer> idxList = Arrays.asList(4,29);
     private PrintStream defaultPrintStream;
     private ByteArrayOutputStream byteArrayOutputStream;
 
@@ -32,7 +32,7 @@ public class IndexOutputImplTest {
         @Test
         void returnOutputResult() {
             setUpStreams();
-            target.output(searchResults);
+            target.output(idxList);
             System.out.flush();
             var actual = byteArrayOutputStream.toString();
             var expected = "4文字目\n29文字目\n";

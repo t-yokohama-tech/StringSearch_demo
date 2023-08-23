@@ -7,10 +7,10 @@ import java.util.List;
 @Component
 public class IndexOutputImpl implements IndexOutput {
     @Override
-    public void output(List<Integer> searchResults) {
+    public void output(List<Integer> idxList) {
         int count = 0;
-        while (count < searchResults.size()) {
-            System.out.println(searchResults.get(count) + "文字目");
+        while (count < idxList.size()) {
+            System.out.println(idxList.get(count) + "文字目");
             count++;
         }
     }

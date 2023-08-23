@@ -5,9 +5,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @AllArgsConstructor
@@ -20,12 +20,23 @@ public class StringSearch implements CommandLineRunner {
     private final IndexOutput indexOutput;
     private final SearchIndex searchIndex;
 
-    private final Path path = Paths.get("data/String_A_File.txt");
+    private final String path = "data/String_A_File.txt";
+    private final File file = new File(path);
+
+
 
     @Override
     public void run(String... args) throws IOException {
         String str = args[0];
-        String stringA = readFile.read(path);
-        indexOutput.output(searchIndex.search(str, stringA));
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        int count = 0; //全文通しての文字数カウント
+        String stringA;
+        List<Integer> idxList = new ArrayList<>(); //全文通しの文字数リスト
+        while ((stringA = readFile.readLine(bufferedReader)) != null) {
+            searchIndex.search(str, stringA, count, idxList);
+            count = count + stringA.length();
+        }
+        indexOutput.output(idxList);
     }
 }
