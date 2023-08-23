@@ -19,8 +19,7 @@ public class StringSearch implements CommandLineRunner {
     private final ReadFile readFile;
     private final IndexOutput indexOutput;
     private final SearchIndex searchIndex;
-
-    private final String path = "data/String_A_File.txt";
+    private final String path = "data/chumonno_oi_ryoriten.utf8.txt";
     private final File file = new File(path);
 
 
@@ -33,8 +32,8 @@ public class StringSearch implements CommandLineRunner {
         int count = 0; //全文通しての文字数カウント
         String stringA;
         List<Integer> idxList = new ArrayList<>(); //全文通しの文字数リスト
-        while ((stringA = readFile.readLine(bufferedReader)) != null) {
-            searchIndex.search(str, stringA, count, idxList);
+        while ((stringA = readFile.read(bufferedReader)) != null) {
+            idxList=searchIndex.search(str, stringA, count, idxList);
             count = count + stringA.length();
         }
         indexOutput.output(idxList);

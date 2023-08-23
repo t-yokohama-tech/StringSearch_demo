@@ -5,5 +5,5 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public interface ReadFile {
-    String readLine(BufferedReader bufferedReader)throws IOException;
+    String read(BufferedReader bufferedReader)throws IOException;
 }
