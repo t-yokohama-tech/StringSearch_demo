@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 
+import javax.swing.plaf.ButtonUI;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
@@ -40,13 +41,12 @@ public class StringSearchTest {
         }
     }
 
-    private final Reader reader = new BufferedReader(fileReader);
+    private final BufferedReader reader = mock(BufferedReader.class);
+     private final BufferedReaderFactory bufferedReaderFactory = mock(BufferedReaderFactory.class);
+    {
+        doReturn(reader).when(bufferedReaderFactory).create(any());
+    }
 
-
-//    private Reader reader = mock(Reader.class);
-//    {
-//        doAnswer(invocation -> reader = (new BufferedReader(fileReader)));
-//    }
 
     private final SearchIndex searchIndex = mock(SearchIndex.class);
     {
@@ -68,10 +68,8 @@ public class StringSearchTest {
     private PrintStream defaultPrintStream;
     private ByteArrayOutputStream byteArrayOutputStream;
     private final StringSearch target =
-            new StringSearch(readFile, indexOutput, searchIndex);
+            new StringSearch(readFile, indexOutput, searchIndex,bufferedReaderFactory);
 
-    public StringSearchTest() {
-    }
 
     public void setUpStreams() {
         defaultPrintStream = System.out;

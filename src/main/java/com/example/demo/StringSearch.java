@@ -17,6 +17,7 @@ public class StringSearch implements CommandLineRunner {
     private final ReadFile readFile;
     private final IndexOutput indexOutput;
     private final SearchIndex searchIndex;
+    private final BufferedReaderFactory bufferedReaderFactory;
     private final String path = "data/chumonno_oi_ryoriten.utf8.txt";
     private final File file = new File(path);
 
@@ -25,7 +26,7 @@ public class StringSearch implements CommandLineRunner {
     @Override
     public void run(String... args) throws IOException {
 
-        try( Reader reader = new BufferedReader(readFile.read(file))){
+        try( Reader reader = bufferedReaderFactory.create(readFile.read(file))){
             indexOutput.output(searchIndex.search(reader, args[0]));
         }
     }
