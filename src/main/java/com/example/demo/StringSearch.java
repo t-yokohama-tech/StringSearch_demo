@@ -6,8 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 @AllArgsConstructor
@@ -26,16 +24,9 @@ public class StringSearch implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws IOException {
-        String str = args[0];
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        int count = 0; //全文通しての文字数カウント
-        String stringA;
-        List<Integer> idxList = new ArrayList<>(); //全文通しの文字数リスト
-        while ((stringA = readFile.read(bufferedReader)) != null) {
-            idxList=searchIndex.search(str, stringA, count, idxList);
-            count = count + stringA.length();
+
+        try( Reader reader = new BufferedReader(readFile.read(file))){
+            indexOutput.output(searchIndex.search(reader, args[0]));
         }
-        indexOutput.output(idxList);
     }
 }
