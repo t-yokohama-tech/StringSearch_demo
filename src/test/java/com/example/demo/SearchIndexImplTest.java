@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -20,12 +21,31 @@ public class SearchIndexImplTest {
     @Nested
     class search {
 
+        @Test
+        void callMultipleTimes() throws IOException {
+            {
+                var reader = new StringReader("はじめの紳士は、すこし顔いろを悪くして、じっと、もひとりの紳士の、顔つきを見ながら云いました。");
+                var keyword = "紳士";
+                var result = target.search( reader, keyword );
+                assertEquals( List.of(4,29), result );
+            }
+
+            {
+                var reader = new StringReader("検索対象の文字列が先頭にあるパターンを検証");
+                var keyword = "検索";
+                var result = target.search( reader, keyword );
+                assertEquals( List.of(0), result );
+            }
+        }
+
         @ParameterizedTest
         @MethodSource
         void returnSearchResults(Reader reader, String str, List<Integer> expected) throws IOException {
             var result = target.search(reader, str);
             assertEquals(expected, result);
         }
+
+
 
 
         static @NotNull Stream<Arguments> returnSearchResults() {
