@@ -1,8 +1,6 @@
 package com.example.demo;
 
 import org.junit.jupiter.api.Test;
-
-import javax.swing.plaf.ButtonUI;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
@@ -20,18 +18,9 @@ public class StringSearchTest {
 
     private final String path = "data/chumonno_oi_ryoriten.utf8.txt";
 
-
     private final File file = new File(path);
 
-    private final FileReader fileReader;
-    {
-        try {
-            fileReader = new FileReader(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    private final FileReader fileReader = mock(FileReader.class);
     private final ReadFile readFile = mock(ReadFile.class);
     {
         try {
