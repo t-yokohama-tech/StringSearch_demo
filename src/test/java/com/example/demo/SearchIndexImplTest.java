@@ -71,6 +71,11 @@ public class SearchIndexImplTest {
                             List.of()
                     ),
                     arguments(
+                            new StringReader("Javaとは、プログラミング言語の一つ。現在、200種類以上のプログラミング言語がある中で、昔から良く使われており、Googleが開発に用いている「Google三大言語（Java、C++、Python）」の一つでもあります。応用力がある言語として昔から根強い人気を誇り、日本でも昔から変わらず人気が高い言語です。"),
+                            "テスト",
+                            List.of()
+                    ),
+                    arguments(
                             new StringReader(
                             """
                                     はじめの紳士は、すこし顔いろを悪くして、じっと、もひとりの紳士の、顔つきを見ながら云いました。
