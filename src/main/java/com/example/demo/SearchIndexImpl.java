@@ -13,14 +13,8 @@ public class SearchIndexImpl implements SearchIndex {
     public List<Integer> search(Reader reader, String str) {
         List<Integer> idxList = new ArrayList<>(); //文字数リスト
         int strLength = str.length();
-        char[] strArray = new char[strLength];
+        char[] strArray = str.toCharArray();
         SlidingWindow slidingWindow = new SlidingWindow(reader, strLength);
-        int i = 0;
-
-        while(strLength>i){
-            strArray[i]=str.charAt(i);
-            i++;
-        }
         while (!slidingWindow.eof()) {
 
             if(Arrays.equals(slidingWindow.toCharArray(),strArray)){
