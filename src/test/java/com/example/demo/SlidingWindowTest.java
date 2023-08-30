@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SlidingWindowTest {
 
     @Test
-    void exampleUsage(){
+    void exampleUsageSingleSlide(){
         var reader = new StringReader("ABCDE");
         var windowSize = 3;
         var target = new SlidingWindow( reader, windowSize );
@@ -19,6 +19,7 @@ class SlidingWindowTest {
         assertFalse( target.eof() );
         assertEquals( 0, target.position() );
         assertArrayEquals(new char[]{'A', 'B', 'C'}, target.toCharArray() );
+
 
 
         target.advance();
@@ -42,4 +43,16 @@ class SlidingWindowTest {
         assertThrows( RuntimeException.class, target::advance);
     }
 
+    @Test
+    void exampleDoubleSlide(){
+        var reader = new StringReader("ABCDE");
+        var windowSize = 3;
+        var target = new SlidingWindow( reader, windowSize );
+
+        target.advance(2);
+        // expects "CDE"
+        assertFalse( target.eof() );
+        assertEquals( 2, target.position() );
+        assertArrayEquals(new char[]{'C', 'D', 'E'}, target.toCharArray() );
+    }
 }

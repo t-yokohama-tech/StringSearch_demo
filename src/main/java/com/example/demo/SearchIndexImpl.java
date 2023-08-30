@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -16,11 +15,29 @@ public class SearchIndexImpl implements SearchIndex {
         char[] strArray = str.toCharArray();
         SlidingWindow slidingWindow = new SlidingWindow(reader, strLength);
         while (!slidingWindow.eof()) {
-
-            if(Arrays.equals(slidingWindow.toCharArray(),strArray)){
-                idxList.add(slidingWindow.position());
+            boolean flag = true;
+            char[] sw = slidingWindow.toCharArray();
+            int matchCharacterCount = 0;
+            int i = strLength - 1;
+            while (sw[i] == strArray[i]) {
+                ++matchCharacterCount;
+                if (matchCharacterCount == strLength) {
+                    idxList.add(slidingWindow.position());
+                    slidingWindow.advance(strLength);
+                    flag = false;
+                    break;
+                }
+                --i;
             }
-            slidingWindow.advance();
+
+            int j = strLength - 1;
+            while (j >= 0 && flag && !slidingWindow.eof()) {
+                if ((sw[i] == strArray[j])) {
+                    break;
+                }
+                j--;
+                slidingWindow.advance();
+            }
         }
         return idxList;
     }

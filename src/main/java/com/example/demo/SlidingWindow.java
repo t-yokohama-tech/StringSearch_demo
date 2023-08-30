@@ -37,19 +37,22 @@ public class SlidingWindow {
     }
 
     public void advance() {
+        advance(1);
+    }
+    public void advance(int n){
         if( eof )
             throw new RuntimeException("EOF");
 
-        var buffer = readChars(1);
+        var buffer = readChars(n);
         if( eof )
             return;
 
         var newWindow = new char[windowSize];
-        System.arraycopy( window, 1, newWindow, 0, windowSize - 1 );
-        System.arraycopy( buffer, 0, newWindow, windowSize -1, 1 );
+        System.arraycopy(window, n, newWindow, 0, windowSize - n);
+        System.arraycopy(buffer, 0, newWindow, windowSize - n, n);
         this.window = newWindow;
 
-        position++;
+        position = position + n;
     }
 
 
