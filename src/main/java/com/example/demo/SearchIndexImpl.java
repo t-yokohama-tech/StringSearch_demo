@@ -14,29 +14,17 @@ public class SearchIndexImpl implements SearchIndex {
         int strLength = str.length();
         char[] strArray = str.toCharArray();
         SlidingWindow slidingWindow = new SlidingWindow(reader, strLength);
-        while (!slidingWindow.eof()) {
-            boolean flag = true;
-            char[] sw = slidingWindow.toCharArray();
-            int matchCharacterCount = 0;
-            int i = strLength - 1;
-            while (sw[i] == strArray[i]) {
-                ++matchCharacterCount;
-                if (matchCharacterCount == strLength) {
-                    idxList.add(slidingWindow.position());
-                    slidingWindow.advance(strLength);
-                    flag = false;
-                    break;
-                }
-                --i;
-            }
 
-            int j = strLength - 1;
-            while (j >= 0 && flag && !slidingWindow.eof()) {
-                if ((sw[i] == strArray[j])) {
+        while (!slidingWindow.eof()) {
+            BMSearch bmSearch = new BMSearch(slidingWindow,strArray,idxList);
+            int j = strLength-1;
+
+            while (j >= 0 && bmSearch.flag() && !slidingWindow.eof()) {  //Windowをずらす用のループ
+                if (strArray[j] == bmSearch.sw()[strLength-1])
                     break;
-                }
-                j--;
+
                 slidingWindow.advance();
+                j--;
             }
         }
         return idxList;

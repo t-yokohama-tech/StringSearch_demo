@@ -31,6 +31,14 @@ public class SearchIndexImplTest {
             }
 
             {
+                var reader = new StringReader("ああいあいうあいうえあいうえお");
+                var keyword = "あいうえお";
+                var result = target.search( reader, keyword );
+                assertEquals( List.of(10), result );
+            }
+
+
+            {
                 var reader = new StringReader("検索対象の文字列が先頭にあるパターンを検証");
                 var keyword = "検索";
                 var result = target.search( reader, keyword );
