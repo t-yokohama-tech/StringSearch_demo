@@ -5,7 +5,6 @@ import org.springframework.lang.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import static javax.swing.UIManager.put;
 
 /**
  * ウィンドウスライド量計算器
@@ -19,17 +18,20 @@ class AdvanceAmountCalculator {
     AdvanceAmountCalculator(@NonNull char[] pattern) {
         // advanceAmountMap の初期化
         this.patternLength = pattern.length;
-        this.advanceAmountMap = new HashMap<>();
+        this.advanceAmountMap = MakeAdvanceAmountMap(pattern, patternLength);
     }
 
-    Map<Character, Integer> MakeAdvanceAmountMap(char[] pattern,int patternLength){
+    private Map<Character, Integer> MakeAdvanceAmountMap(char[] pattern,int patternLength){
+        Map<Character,Integer> charAmountMap = new HashMap<>();
         int i = 1;
         while(i <= patternLength-1){
             int ptnTargetPosition = patternLength-i-1;
-            advanceAmountMap.put(pattern[ptnTargetPosition], getSlidingAmount(i-1,pattern[ptnTargetPosition]));
+            if(!charAmountMap.containsKey(pattern[ptnTargetPosition])) {
+                charAmountMap.put(pattern[ptnTargetPosition], i);
+            }
             i++;
         }
-        return advanceAmountMap;
+        return charAmountMap;
     }
 
     /**
@@ -43,11 +45,11 @@ class AdvanceAmountCalculator {
         //   advanceAmountMap から得られるスライド量
         //     または
         //   patternLength - position
-        //   のいずれか小さい方の値を返す
+        //   のいずれか大きい方の値を返す
         // advanceAmountMap が c を含まない場合:
         //   position + 1 を返す
         if (advanceAmountMap.containsKey(c))
-            return Math.min(advanceAmountMap.get(c), patternLength - position);
+            return Math.max(advanceAmountMap.get(c), patternLength - position);
         else
             return position+1;
     }
