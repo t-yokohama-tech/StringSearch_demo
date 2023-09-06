@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.lang.NonNull;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,18 +19,18 @@ class AdvanceAmountCalculator {
     AdvanceAmountCalculator(@NonNull char[] pattern) {
         // advanceAmountMap の初期化
         this.patternLength = pattern.length;
-        this.advanceAmountMap = MakeAdvanceAmountMap(pattern, patternLength);
+        this.advanceAmountMap = Collections.unmodifiableMap(makeAdvanceAmountMap(pattern));
     }
 
-    private Map<Character, Integer> MakeAdvanceAmountMap(char[] pattern,int patternLength){
+    private Map<Character, Integer> makeAdvanceAmountMap(char[] pattern){
         Map<Character,Integer> charAmountMap = new HashMap<>();
-        int i = 1;
-        while(i <= patternLength-1){
-            int ptnTargetPosition = patternLength-i-1;
-            if(!charAmountMap.containsKey(pattern[ptnTargetPosition])) {
-                charAmountMap.put(pattern[ptnTargetPosition], i);
+        for( int i = 0; i < pattern.length - 1; i++){
+            if(!charAmountMap.containsKey(pattern[i])) {
+                charAmountMap.put(
+                        pattern[i],
+                        patternLength - i - 1
+                );
             }
-            i++;
         }
         return charAmountMap;
     }

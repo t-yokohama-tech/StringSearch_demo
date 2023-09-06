@@ -1,24 +1,33 @@
 package com.example.demo;
 
-import org.junit.jupiter.api.Test;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class AdvanceAmountCalculatorTest {
 
-    @Test
-    void getSlidingAmountTest() {
+    char[] pattern = "ABCAD".toCharArray();
+    private final AdvanceAmountCalculator target = new AdvanceAmountCalculator(pattern);
+    @ParameterizedTest
+    @MethodSource
+    void getSlidingAmountTest(int position, char c, int expected) {
+        var result = target.getSlidingAmount(position,c);
+        assertEquals(expected, result);
+    }
 
-        var pattern = "ABCAD".toCharArray();
-        var target = new AdvanceAmountCalculator(pattern);
-        var slideAmount_A = target.getSlidingAmount(1, 'A');
-        var slideAmount_B = target.getSlidingAmount(2, 'B');
-        var slideAmount_C = target.getSlidingAmount(3, 'C');
+    static @NotNull Stream<Arguments> getSlidingAmountTest(){
+        return Stream.of(
+                arguments(1, 'A', 4),//advanceAmountMapに含まれる文字　かつ　patternLength - positionを返却
+                arguments(4, 'B', 3),//advanceAmountMapに含まれる文字　かつ　advanceAmountMapの値を返却
+                arguments(4, 'Z', 5) //advanceAmountMapに含まれない文字
 
-
-        assertEquals(4, slideAmount_A);
-        assertEquals(3, slideAmount_B);
-        assertEquals(2, slideAmount_C);
+        );
     }
 }
