@@ -13,7 +13,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class AdvanceAmountCalculatorTest {
 
-    char[] pattern = "ABCAD".toCharArray();
+    private final char[] pattern = "ABCAD".toCharArray();
     private final AdvanceAmountCalculator target = new AdvanceAmountCalculator(pattern);
     @ParameterizedTest
     @MethodSource
