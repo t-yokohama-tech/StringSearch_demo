@@ -18,18 +18,26 @@ public class SearchIndexImpl implements SearchIndex {
         PatternMatcher patternMatcher = new PatternMatcher(ptnArray);
 
 
+
+
         while (!slidingWindow.eof()) {
             char[] sw = slidingWindow.toCharArray();
             PatternMatcher.Result result = patternMatcher.reverseMatch(sw);
-            int slidingAmount;
-            if (result instanceof PatternMatcher.Match) {
-                idxList.add(slidingWindow.position());
-                slidingAmount = 1;
-            } else {
-                var misMatchResult = (PatternMatcher.Mismatch) result;
-                slidingAmount = advanceAmountCalculator.getSlidingAmount(misMatchResult.position(), sw[misMatchResult.position()]);
-            }
-            slidingWindow.advance(slidingAmount);
+
+            var visitor = new PatternMatcher.Result.Visitor<Integer>() {
+
+                public Integer mismatch(PatternMatcher.Mismatch mismatch){
+                    System.out.println("mismatch");
+                    return advanceAmountCalculator.getSlidingAmount(mismatch.position(), sw[mismatch.position()]);
+                }
+                
+                public Integer match(){
+                    System.out.println("match");
+                    idxList.add(slidingWindow.position());
+                    return 1;
+                }
+            };
+            slidingWindow.advance( result.accept( visitor ) );
         }
         return idxList;
     }

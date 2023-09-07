@@ -12,6 +12,13 @@ public class PatternMatcher {
      * 照合結果
      */
     interface Result {
+
+        int accept(Result.Visitor<Integer> visitor);
+
+        interface Visitor<T>{
+            T mismatch( PatternMatcher.Mismatch mismatch );
+            T match();
+        }
     }
 
     /**
@@ -20,6 +27,10 @@ public class PatternMatcher {
      * @param position 不一致箇所のインデックス
      */
     record Mismatch(int position) implements Result {
+
+        public int accept(Visitor<Integer> visitor) {
+            return position;
+        }
     }
 
     /**
@@ -27,6 +38,10 @@ public class PatternMatcher {
      */
     @lombok.EqualsAndHashCode
     static class Match implements Result {
+
+        public int accept(Visitor<Integer> visitor) {
+            return 1;
+        }
     }
 
     @NonNull
