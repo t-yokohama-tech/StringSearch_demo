@@ -9,23 +9,26 @@ import java.util.List;
 @Component
 public class SearchIndexImpl implements SearchIndex {
     @Override
-    public List<Integer> search(Reader reader, String str) {
+    public List<Integer> search(Reader reader, String ptn) {
         List<Integer> idxList = new ArrayList<>(); //文字数リスト
-        int strLength = str.length();
-        char[] strArray = str.toCharArray();
-        SlidingWindow slidingWindow = new SlidingWindow(reader, strLength);
+        int ptnLength = ptn.length();
+        char[] ptnArray = ptn.toCharArray();
+        SlidingWindow slidingWindow = new SlidingWindow(reader, ptnLength);
+        AdvanceAmountCalculator advanceAmountCalculator = new AdvanceAmountCalculator(ptnArray);
+        PatternMatcher patternMatcher = new PatternMatcher(ptnArray);
+        int slidingAmount;
 
         while (!slidingWindow.eof()) {
-            BMSearch bmSearch = new BMSearch(slidingWindow,strArray,idxList);
-            int j = strLength-1;
+            char[] sw = slidingWindow.toCharArray();
+            PatternMatcher.Result result = patternMatcher.reverseMatch(sw);
 
-            while (j >= 0 && bmSearch.flag() && !slidingWindow.eof()) {  //Windowをずらす用のループ
-                if (strArray[j] == bmSearch.sw()[strLength-1])
-                    break;
-
-                slidingWindow.advance();
-                j--;
+            if (result.equals(new PatternMatcher.Match())) {
+                idxList.add(slidingWindow.position());
+                slidingAmount = ptnLength;
+            } else {
+                slidingAmount = advanceAmountCalculator.getSlidingAmount(result.hashCode(), sw[result.hashCode()]);
             }
+            slidingWindow.advance(slidingAmount);
         }
         return idxList;
     }
