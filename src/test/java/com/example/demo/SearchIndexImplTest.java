@@ -94,6 +94,11 @@ public class SearchIndexImplTest {
                                     """),
                             "紳士",
                             List.of(4, 29, 52, 77, 99, 124, 147, 172, 195, 220)
+                    ),
+                    arguments(
+                            new StringReader( "a".repeat(6) ),
+                            "a".repeat(3),
+                            List.of(0,1,2,3)
                     )
             );
         }

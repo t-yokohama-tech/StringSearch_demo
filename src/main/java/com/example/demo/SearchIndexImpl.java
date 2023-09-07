@@ -16,17 +16,18 @@ public class SearchIndexImpl implements SearchIndex {
         SlidingWindow slidingWindow = new SlidingWindow(reader, ptnLength);
         AdvanceAmountCalculator advanceAmountCalculator = new AdvanceAmountCalculator(ptnArray);
         PatternMatcher patternMatcher = new PatternMatcher(ptnArray);
-        int slidingAmount;
+
 
         while (!slidingWindow.eof()) {
             char[] sw = slidingWindow.toCharArray();
             PatternMatcher.Result result = patternMatcher.reverseMatch(sw);
-
-            if (result.equals(new PatternMatcher.Match())) {
+            int slidingAmount;
+            if (result instanceof PatternMatcher.Match) {
                 idxList.add(slidingWindow.position());
-                slidingAmount = ptnLength;
+                slidingAmount = 1;
             } else {
-                slidingAmount = advanceAmountCalculator.getSlidingAmount(result.hashCode(), sw[result.hashCode()]);
+                var misMatchResult = (PatternMatcher.Mismatch) result;
+                slidingAmount = advanceAmountCalculator.getSlidingAmount(misMatchResult.position(), sw[misMatchResult.position()]);
             }
             slidingWindow.advance(slidingAmount);
         }
