@@ -25,6 +25,7 @@ public class PatternMatcher {
     /**
      * 照合結果 パターンと一致.
      */
+    @lombok.EqualsAndHashCode
     static class Match implements Result {
     }
 

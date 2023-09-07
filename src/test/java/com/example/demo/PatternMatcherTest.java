@@ -9,11 +9,8 @@ import org.mockito.MockedConstruction;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mockConstruction;
 
 public class PatternMatcherTest {
 
@@ -34,18 +31,4 @@ public class PatternMatcherTest {
                 arguments("ABCAD".toCharArray(), new PatternMatcher.Mismatch(4))
         );
     }
-
-    @Test
-    void test() {
-        try (MockedConstruction<PatternMatcher.Match> mockResult = mockConstruction(PatternMatcher.Match.class)) {
-            var result = new PatternMatcher.Match();
-            doReturn(new PatternMatcher.Match()).when(result);
-
-            assertEquals(result,target.reverseMatch("ABCDE".toCharArray()));
-        }
-
-    }
-
-
-
 }
