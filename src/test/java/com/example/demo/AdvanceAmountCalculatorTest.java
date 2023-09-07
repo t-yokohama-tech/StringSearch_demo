@@ -24,8 +24,8 @@ public class AdvanceAmountCalculatorTest {
 
     static @NotNull Stream<Arguments> getSlidingAmountTest(){
         return Stream.of(
-                arguments(1, 'A', 4),//advanceAmountMapに含まれる文字　かつ　patternLength - positionを返却
-                arguments(4, 'B', 3),//advanceAmountMapに含まれる文字　かつ　advanceAmountMapの値を返却
+                arguments(2, 'A', 2),//advanceAmountMapに含まれる文字　かつ　advanceAmountMap.get(c)-patternLength + position + 1を返却
+                arguments(1, 'C', 1),//advanceAmountMapに含まれる文字　かつ　1の値を返却
                 arguments(4, 'Z', 5) //advanceAmountMapに含まれない文字
 
         );

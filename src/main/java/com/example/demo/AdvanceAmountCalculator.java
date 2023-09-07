@@ -43,14 +43,14 @@ class AdvanceAmountCalculator {
      */
     int getSlidingAmount(int position, char c) {
         // advanceAmountMap が c を含む場合:
-        //   advanceAmountMap から得られるスライド量
+        //   advanceAmountMap から得られるスライド量 - patternLength + position + 1
         //     または
-        //   patternLength - position
+        //   1
         //   のいずれか大きい方の値を返す
         // advanceAmountMap が c を含まない場合:
         //   position + 1 を返す
         if (advanceAmountMap.containsKey(c))
-            return Math.max(advanceAmountMap.get(c), patternLength - position);
+            return Math.max(advanceAmountMap.get(c)-patternLength + position + 1, 1);
         else
             return position+1;
     }
