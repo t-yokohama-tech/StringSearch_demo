@@ -45,6 +45,9 @@ public class PatternMatcher {
     @NonNull
     private final char[] pattern;
 
+    private final MatchFactory matchfactory = MatchFactory.getInstance();
+    private final MismatchFactory mismatchFactory = MismatchFactory.getInstance();
+    private final Result match = matchfactory.getMatch();
     /**
      * chars とパターンを後方から照合して照合結果を返す.
      */
@@ -56,10 +59,10 @@ public class PatternMatcher {
         int position = chars.length - 1;
         while (position >= 0) {
             if (pattern[position] != chars[position]) {
-                return new Mismatch(position);
+                return mismatchFactory.getMismatch(position);
             }
             position--;
         }
-        return new Match();
+        return match;
     }
 }
