@@ -36,6 +36,13 @@ public class SlidingWindow {
         return window.clone();
     }
 
+    public char charAt(int position){
+        if( eof )
+            throw new RuntimeException("EOF");
+
+        return window[position];
+    }
+
     public void advance() {
         advance(1);
     }
