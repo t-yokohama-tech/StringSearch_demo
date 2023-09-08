@@ -2,7 +2,7 @@ package com.example.demo;
 
 public class MatchFactory {
 
-    private static MatchFactory singleton = new MatchFactory();
+    private static final MatchFactory singleton = new MatchFactory();
 
     private MatchFactory() {
     }
