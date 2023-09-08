@@ -10,7 +10,6 @@ public class IndexOutputImpl implements IndexOutput {
     public void output(List<Integer> idxList) {
         int count = 0;
         while (count < idxList.size()) {
-            System.out.println(idxList.get(count) + "文字目");
             count++;
         }
     }

@@ -21,10 +21,8 @@ public class MismatchFactory {
     public synchronized PatternMatcher.Result getMismatch(int position) {
 
         PatternMatcher.Result result = pool.get(position);
-        System.out.println("mismatch！！"+position);
         if(result == null){
             result = new PatternMatcher.Mismatch(position);
-            System.out.println("mismatch_newしたよ");
             pool.put(position, result);
         }
         return result;

@@ -47,7 +47,6 @@ public class SlidingWindow {
         advance(1);
     }
     public void advance(int n){
-        System.out.println("スライド量："+ n);
         if( eof )
             throw new RuntimeException("EOF");
 

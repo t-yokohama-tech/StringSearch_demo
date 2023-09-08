@@ -13,7 +13,6 @@ public class MatchFactory {
 
 
     public synchronized PatternMatcher.Result getMatch() {
-        System.out.println("newしたよ");
         return new PatternMatcher.Match();
     }
 }

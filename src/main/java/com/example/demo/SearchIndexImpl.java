@@ -30,7 +30,6 @@ public class SearchIndexImpl implements SearchIndex {
 
         while (!slidingWindow.eof()) {
             char[] sw = slidingWindow.toCharArray();
-            System.out.println("検索対象："+ Arrays.toString(sw));
             PatternMatcher.Result result = patternMatcher.reverseMatch(sw);
             slidingWindow.advance( result.accept( visitor ) );
         }
