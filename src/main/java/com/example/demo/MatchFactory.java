@@ -12,7 +12,7 @@ public class MatchFactory {
     }
 
 
-    public synchronized PatternMatcher.Result getMatch() {
+    public PatternMatcher.Result getMatch() {
         return new PatternMatcher.Match();
     }
 }

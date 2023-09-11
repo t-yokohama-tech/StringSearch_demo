@@ -18,12 +18,14 @@ public class MismatchFactory {
     }
 
 
-    public synchronized PatternMatcher.Result getMismatch(int position) {
+    public PatternMatcher.Result getMismatch(int position) {
 
         PatternMatcher.Result result = pool.get(position);
         if(result == null){
             result = new PatternMatcher.Mismatch(position);
-            pool.put(position, result);
+            synchronized (pool) {
+                pool.put(position, result);
+            }
         }
         return result;
     }
